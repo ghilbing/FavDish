@@ -1,4 +1,4 @@
-package com.hilbing.favdish.ui.notifications
+package com.hilbing.favdish.view.fragments
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -9,6 +9,7 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.hilbing.favdish.R
+import com.hilbing.favdish.viewmodel.NotificationsViewModel
 
 class NotificationsFragment : Fragment() {
 
