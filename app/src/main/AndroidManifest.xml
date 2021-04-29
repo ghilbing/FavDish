@@ -9,9 +9,10 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.FavDish">
-        <activity android:name=".view.activities.AddUpdateActivity"
+        <activity android:name=".view.activities.AddUpdateDishActivity"
             android:label="@string/add_dish"
             android:theme="@style/Theme.FavDish.NoActionBar"
+            android:configChanges="orientation"
             ></activity>
         <activity
             android:name=".view.activities.SplashActivity"

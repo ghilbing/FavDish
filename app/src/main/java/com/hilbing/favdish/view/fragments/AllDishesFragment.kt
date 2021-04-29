@@ -8,7 +8,7 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.hilbing.favdish.R
-import com.hilbing.favdish.view.activities.AddUpdateActivity
+import com.hilbing.favdish.view.activities.AddUpdateDishActivity
 import com.hilbing.favdish.viewmodel.HomeViewModel
 
 class AllDishesFragment : Fragment() {
@@ -43,7 +43,7 @@ class AllDishesFragment : Fragment() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when(item.itemId){
             R.id.action_add_dish -> {
-                startActivity(Intent(requireActivity(), AddUpdateActivity::class.java))
+                startActivity(Intent(requireActivity(), AddUpdateDishActivity::class.java))
                 return true
             }
         }
