@@ -79,4 +79,7 @@
     <string name="no">No</string>
     <string name="action_filter">Select item to filter</string>
     <string name="fav_dish">Fav Dish</string>
+    <string name="you_have_camera_permission_now">You have camera permission now</string>
+    <string name="you_have_gallery_permission_now">You have gallery permission now to select an image</string>
+    <string name="you_have_denied_permissions_for_using_the_camera">You have denied permissions for using the camera</string>
 </resources>
