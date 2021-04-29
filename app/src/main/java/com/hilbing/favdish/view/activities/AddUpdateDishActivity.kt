@@ -20,6 +20,7 @@ import android.provider.MediaStore
 import android.provider.Settings
 import android.util.Log
 import androidx.core.content.ContextCompat
+import com.bumptech.glide.Glide
 import com.karumi.dexter.MultiplePermissionsReport
 import com.karumi.dexter.PermissionToken
 import com.karumi.dexter.listener.PermissionDeniedResponse
@@ -77,7 +78,10 @@ class AddUpdateDishActivity : AppCompatActivity(), View.OnClickListener {
                 data?.extras?.let {
                     val thumbnail: Bitmap =
                         data.extras!!.get("data") as Bitmap // Bitmap from camera
-                    mBinding.ivDishImage.setImageBitmap(thumbnail) // Set to the imageView.
+                    //mBinding.ivDishImage.setImageBitmap(thumbnail) // Set to the imageView.
+                    Glide.with(this).load(thumbnail)
+                            .centerCrop()
+                            .into(mBinding.ivDishImage)
 
                     // Replace the add icon with edit icon once the image is selected.
                     mBinding.ivAddDishImage.setImageDrawable(
@@ -96,7 +100,11 @@ class AddUpdateDishActivity : AppCompatActivity(), View.OnClickListener {
                     // Here we will get the select image URI.
                     val selectedPhotoUri = data.data
 
-                    mBinding.ivDishImage.setImageURI(selectedPhotoUri) // Set the selected image from GALLERY to imageView.
+                    //mBinding.ivDishImage.setImageURI(selectedPhotoUri) // Set the selected image from GALLERY to imageView.
+                    Glide.with(this)
+                            .load(selectedPhotoUri)
+                            .centerCrop()
+                            .into(mBinding.ivDishImage)
 
                     // Replace the add icon with edit icon once the image is selected.
                     mBinding.ivAddDishImage.setImageDrawable(
