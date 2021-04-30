@@ -82,4 +82,15 @@
     <string name="you_have_camera_permission_now">You have camera permission now</string>
     <string name="you_have_gallery_permission_now">You have gallery permission now to select an image</string>
     <string name="you_have_denied_permissions_for_using_the_camera">You have denied permissions for using the camera</string>
+    <string name="title_select_dish_type">SELECT DISH TYPE</string>
+    <string name="title_select_category">SELECT CATEGORY</string>
+    <string name="title_select_cooking_time">SELECT COOKING TIME</string>
+    <string name="msg_select_dish_image">Please, select dish image</string>
+    <string name="msg_enter_dish_title">Please, enter dish title</string>
+    <string name="msg_enter_dish_type">Please, enter dish type</string>
+    <string name="msg_enter_dish_category">Please, enter dish category</string>
+    <string name="msg_enter_dish_ingredients">Please, enter dish ingredients</string>
+    <string name="msg_enter_dish_cooking_time">Please, enter dish cooking time</string>
+    <string name="msg_enter_dish_cooking_instructions">Please, enter dish cooking instructions</string>
+
 </resources>

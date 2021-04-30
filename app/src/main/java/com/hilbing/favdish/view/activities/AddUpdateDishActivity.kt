@@ -21,15 +21,20 @@ import android.graphics.drawable.Drawable
 import android.net.Uri
 import android.provider.MediaStore
 import android.provider.Settings
+import android.text.TextUtils
 import android.util.Log
 import androidx.core.content.ContextCompat
 import androidx.core.graphics.drawable.toBitmap
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.DataSource
 import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.bumptech.glide.load.engine.GlideException
 import com.bumptech.glide.request.RequestListener
 import com.bumptech.glide.request.target.Target
+import com.hilbing.favdish.databinding.DialogCustomListBinding
+import com.hilbing.favdish.utils.Constants
+import com.hilbing.favdish.view.adapters.CustomListItemAdapter
 import com.karumi.dexter.MultiplePermissionsReport
 import com.karumi.dexter.PermissionToken
 import com.karumi.dexter.listener.PermissionDeniedResponse
@@ -49,6 +54,8 @@ class AddUpdateDishActivity : AppCompatActivity(), View.OnClickListener {
 
     private var mImagePath: String = ""
 
+    private lateinit var mCustomListDialog: Dialog
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -57,7 +64,13 @@ class AddUpdateDishActivity : AppCompatActivity(), View.OnClickListener {
 
         setupActionBar()
 
+        mBinding.etType.setOnClickListener(this)
+        mBinding.etCategory.setOnClickListener(this)
+        mBinding.etCookingTime.setOnClickListener(this)
+
         mBinding.ivAddDishImage.setOnClickListener(this@AddUpdateDishActivity)
+
+        mBinding.btnAddDish.setOnClickListener(this@AddUpdateDishActivity)
     }
 
     override fun onClick(v: View) {
@@ -68,6 +81,80 @@ class AddUpdateDishActivity : AppCompatActivity(), View.OnClickListener {
 
                 customImageSelectionDialog()
                 return
+            }
+
+            R.id.et_type -> {
+                customItemsDialog(resources.getString(R.string.title_select_dish_type),
+                        Constants.dishTypes(),
+                        Constants.DISH_TYPE)
+                return
+            }
+            R.id.et_category -> {
+                customItemsDialog(resources.getString(R.string.title_select_category),
+                Constants.dishCategories(),
+                Constants.DISH_CATEGORY)
+                return
+            }
+            R.id.et_cooking_time -> {
+                customItemsDialog(resources.getString(R.string.title_select_cooking_time),
+                Constants.dishCookingTimes(),
+                Constants.DISH_COOKING_TIME)
+                return
+            }
+
+            R.id.btn_add_dish -> {
+                val title = mBinding.etTitle.text.toString().trim() { it <= ' ' } //trimming empty spaces
+                val type = mBinding.etType.text.toString().trim() { it <= ' ' }
+                val category = mBinding.etCategory.text.toString().trim() { it <= ' ' }
+                val ingredients = mBinding.etIngredients.text.toString().trim() { it <= ' ' }
+                val cookingTimeInMinutes = mBinding.etCookingTime.text.toString().trim() { it <= ' ' }
+                val cookingDirection = mBinding.etDirectionToCook.text.toString().trim() { it <= ' ' }
+
+                when {
+                    TextUtils.isEmpty(mImagePath) -> {
+                        Toast.makeText(this@AddUpdateDishActivity, resources.getString(R.string.msg_select_dish_image), Toast.LENGTH_SHORT).show()
+                    }
+                    TextUtils.isEmpty(title) -> {
+                        Toast.makeText(this@AddUpdateDishActivity, resources.getString(R.string.msg_enter_dish_title), Toast.LENGTH_SHORT).show()
+                    }
+                    TextUtils.isEmpty(type) -> {
+                        Toast.makeText(this@AddUpdateDishActivity, resources.getString(R.string.msg_enter_dish_type), Toast.LENGTH_SHORT).show()
+                    }
+                    TextUtils.isEmpty(category) -> {
+                        Toast.makeText(this@AddUpdateDishActivity, resources.getString(R.string.msg_enter_dish_category), Toast.LENGTH_SHORT).show()
+                    }
+                    TextUtils.isEmpty(ingredients) -> {
+                        Toast.makeText(this@AddUpdateDishActivity, resources.getString(R.string.msg_enter_dish_ingredients), Toast.LENGTH_SHORT).show()
+                    }
+                    TextUtils.isEmpty(cookingTimeInMinutes) -> {
+                        Toast.makeText(this@AddUpdateDishActivity, resources.getString(R.string.msg_enter_dish_cooking_time), Toast.LENGTH_SHORT).show()
+                    }
+                    TextUtils.isEmpty(cookingDirection) -> {
+                        Toast.makeText(this@AddUpdateDishActivity, resources.getString(R.string.msg_enter_dish_cooking_instructions), Toast.LENGTH_SHORT).show()
+                    }
+                    else -> {
+                        Toast.makeText(this@AddUpdateDishActivity, "All entries are valid", Toast.LENGTH_SHORT).show()
+                    }
+                }
+
+
+            }
+        }
+    }
+
+    fun selectedListItem(item: String, selection: String){
+        when(selection){
+            Constants.DISH_TYPE -> {
+                mCustomListDialog.dismiss()
+                mBinding.etType.setText(item)
+            }
+            Constants.DISH_CATEGORY -> {
+                mCustomListDialog.dismiss()
+                mBinding.etCategory.setText(item)
+            }
+            else -> {
+                mCustomListDialog.dismiss()
+                mBinding.etCookingTime.setText(item)
             }
         }
     }
@@ -213,7 +300,7 @@ class AddUpdateDishActivity : AppCompatActivity(), View.OnClickListener {
                 }).onSameThread()
                 .check()
 
-            dialog.dismiss()
+           dialog.dismiss()
         }
 
         binding.tvGallery.setOnClickListener {
@@ -293,6 +380,18 @@ class AddUpdateDishActivity : AppCompatActivity(), View.OnClickListener {
             e.printStackTrace()
         }
         return file.absolutePath
+    }
+
+    private fun customItemsDialog(title: String, itemsList: List<String>, selection: String){
+        mCustomListDialog = Dialog(this)
+        val binding: DialogCustomListBinding = DialogCustomListBinding.inflate(layoutInflater)
+        mCustomListDialog.setContentView(binding.root)
+        binding.tvTitle.text = title
+        binding.rvList.layoutManager = LinearLayoutManager(this)
+        val adapter = CustomListItemAdapter(this, itemsList, selection)
+        binding.rvList.adapter = adapter
+        mCustomListDialog.show()
+
     }
 
     companion object {
