@@ -30,5 +30,10 @@
         android:id="@+id/dishDetailsFragment"
         android:name="com.hilbing.favdish.view.fragments.DishDetailsFragment"
         android:label="@string/dish_details"
-        tools:layout="@layout/fragment_dish_details" />
+        tools:layout="@layout/fragment_dish_details">
+        <argument
+            android:name="dishDetails"
+            app:argType="com.hilbing.favdish.model.entities.FavDish"
+            />
+    </fragment>
 </navigation>
