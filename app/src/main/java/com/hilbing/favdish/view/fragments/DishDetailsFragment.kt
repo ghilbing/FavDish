@@ -7,10 +7,16 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.navigation.fragment.navArgs
+import com.bumptech.glide.Glide
 import com.hilbing.favdish.R
+import com.hilbing.favdish.databinding.FragmentDishDetailsBinding
+import java.io.IOError
+import java.io.IOException
+import java.util.*
 
 
 class DishDetailsFragment : Fragment() {
+    private var mBinding: FragmentDishDetailsBinding? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -21,14 +27,35 @@ class DishDetailsFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_dish_details, container, false)
+        mBinding = FragmentDishDetailsBinding.inflate(inflater, container, false)
+        return mBinding!!.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         val args: DishDetailsFragmentArgs by navArgs()
-        Log.i("Dish Title", args.dishDetails.title + " " + args.dishDetails.type)
+        args.let{
+            try{
+                Glide.with(requireActivity())
+                    .load(it.dishDetails.image)
+                    .centerCrop()
+                    .into(mBinding!!.ivDishImage)
+            } catch (e: IOException){
+                e.printStackTrace()
+            }
+
+            mBinding!!.tvTitle.text = it.dishDetails.title
+            mBinding!!.tvType.text = it.dishDetails.type.capitalize(Locale.ROOT)
+            mBinding!!.tvCategory.text = it.dishDetails.category.capitalize(Locale.ROOT)
+            mBinding!!.tvIngredients.text = it.dishDetails.ingredients
+            mBinding!!.tvCookingDirection.text = it.dishDetails.cookingTime
+            mBinding!!.tvCookingTime.text = it.dishDetails.cookingTime
+        }
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        mBinding = null
     }
 
 }
