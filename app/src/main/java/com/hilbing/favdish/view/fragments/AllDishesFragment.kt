@@ -16,6 +16,7 @@ import com.hilbing.favdish.R
 import com.hilbing.favdish.application.FavDishApplication
 import com.hilbing.favdish.databinding.FragmentAllDishesBinding
 import com.hilbing.favdish.view.activities.AddUpdateDishActivity
+import com.hilbing.favdish.view.activities.MainActivity
 import com.hilbing.favdish.view.adapters.FavDishAdapter
 import com.hilbing.favdish.viewmodel.FavDishViewModel
 import com.hilbing.favdish.viewmodel.FavDishViewModelFactory
@@ -68,6 +69,16 @@ class AllDishesFragment : Fragment() {
 
     fun dishDetails(){
         findNavController().navigate(AllDishesFragmentDirections.actionNavigationAllDishesToDishDetailsFragment())
+        if(requireActivity() is MainActivity){
+            (activity as MainActivity?)!!.hideBottomNavigationView()
+        }
+    }
+
+    override fun onResume() {
+        super.onResume()
+        if(requireActivity() is MainActivity){
+            (activity as MainActivity?)!!.showBottomNavigationView()
+        }
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
