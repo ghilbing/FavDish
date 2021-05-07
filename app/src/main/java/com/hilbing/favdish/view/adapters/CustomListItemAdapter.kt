@@ -3,14 +3,17 @@ package com.hilbing.favdish.view.adapters
 import android.app.Activity
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.RecyclerView
 import com.hilbing.favdish.databinding.ItemCustomListBinding
 import com.hilbing.favdish.view.activities.AddUpdateDishActivity
+import com.hilbing.favdish.view.fragments.AllDishesFragment
 
 class CustomListItemAdapter(
-        private val activity: Activity,
-private val listItems: List<String>,
-private val selection: String)
+    private val activity: Activity,
+    private val fragment: Fragment?,
+    private val listItems: List<String>,
+    private val selection: String)
     : RecyclerView.Adapter<CustomListItemAdapter.ViewHolder>()
 {
 
@@ -26,14 +29,15 @@ private val selection: String)
             if(activity is AddUpdateDishActivity){
                 activity.selectedListItem(item, selection)
             }
+            if(fragment is AllDishesFragment){
+                fragment.filterSelection(item)
+            }
         }
     }
 
     override fun getItemCount(): Int {
         return listItems.size
     }
-
-
 
         class ViewHolder(view: ItemCustomListBinding): RecyclerView.ViewHolder(view.root){
             val tvText = view.tvText
