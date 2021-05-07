@@ -11,10 +11,13 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import com.hilbing.favdish.R
 import com.hilbing.favdish.application.FavDishApplication
 import com.hilbing.favdish.databinding.FragmentFavoriteDishesBinding
+import com.hilbing.favdish.model.entities.FavDish
+import com.hilbing.favdish.view.activities.MainActivity
 import com.hilbing.favdish.view.adapters.FavDishAdapter
 import com.hilbing.favdish.viewmodel.DashboardViewModel
 import com.hilbing.favdish.viewmodel.FavDishViewModel
@@ -62,8 +65,26 @@ class FavoriteDishesFragment : Fragment() {
         }
     }
 
+    fun dishDetails(favDish: FavDish){
+
+        findNavController().
+        navigate(FavoriteDishesFragmentDirections.actionNavigationFavoriteDishesToDishDetailsFragment(favDish))
+
+        if(requireActivity() is MainActivity){
+            (activity as MainActivity?)!!.hideBottomNavigationView()
+        }
+
+    }
+
     override fun onDestroy() {
         super.onDestroy()
         mBinding = null
+    }
+
+    override fun onResume() {
+        super.onResume()
+        if(requireActivity() is MainActivity){
+            (activity as MainActivity?)!!.showBottomNavigationView()
+        }
     }
 }
