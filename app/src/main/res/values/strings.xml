@@ -96,5 +96,7 @@
     <string name="favorite_dishes">Favorite Dishes</string>
     <string name="random_dish">Random Dish</string>
     <string name="dish_details">Dish Details</string>
+    <string name="msg_added_to_favorites">Added to Favorites</string>
+    <string name="msg_removed_from_favorite">Removed from Favorites</string>
 
 </resources>
