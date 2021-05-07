@@ -103,5 +103,7 @@
     <string name="update_dish">Update Dish</string>
     <string name="edit_dish">Edit Dish</string>
     <string name="lbl_update_dish">Update Dish</string>
+    <string name="delete_dish">Delete Dish</string>
+    <string name="delete_message">Are you sure you want to delete this dish?</string>
 
 </resources>

@@ -20,4 +20,9 @@ class FavDishRepository(private val favDishDao: FavDishDao) {
 
     val favoritesDishes: Flow<List<FavDish>> = favDishDao.getFavoriteDishesList()
 
+    @WorkerThread
+    suspend fun deleteFavDish(favDish: FavDish){
+        favDishDao.deleteFavDish(favDish)
+    }
+
 }

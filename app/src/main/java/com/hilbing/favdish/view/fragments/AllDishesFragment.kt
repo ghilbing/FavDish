@@ -1,5 +1,6 @@
 package com.hilbing.favdish.view.fragments
 
+import android.app.AlertDialog
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
@@ -75,6 +76,25 @@ class AllDishesFragment : Fragment() {
         if(requireActivity() is MainActivity){
             (activity as MainActivity?)!!.hideBottomNavigationView()
         }
+    }
+
+    fun deleteDish(dish: FavDish){
+        val builder = AlertDialog.Builder(requireActivity())
+        builder.setTitle(resources.getString(R.string.delete_dish))
+        builder.setMessage(resources.getString(R.string.delete_message))
+        builder.setIcon(android.R.drawable.ic_dialog_alert)
+        builder.setPositiveButton(resources.getString(R.string.yes)){
+            dialogInterface, _->
+            mFavDishViewModel.delete(dish)
+            dialogInterface.dismiss()
+        }
+        builder.setNegativeButton(resources.getString(R.string.no)){
+            dialogInterface, _->
+            dialogInterface.dismiss()
+        }
+        val alertDialog: AlertDialog = builder.create()
+        alertDialog.setCancelable(false)
+        alertDialog.show()
     }
 
     override fun onResume() {
