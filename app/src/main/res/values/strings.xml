@@ -100,5 +100,8 @@
     <string name="msg_removed_from_favorite">Removed from Favorites</string>
     <string name="action_edit_dish">Edit Dish</string>
     <string name="action_delete_dish">Delete Dish</string>
+    <string name="update_dish">Update Dish</string>
+    <string name="edit_dish">Edit Dish</string>
+    <string name="lbl_update_dish">Update Dish</string>
 
 </resources>
